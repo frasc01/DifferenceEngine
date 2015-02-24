@@ -13,7 +13,7 @@ public class Difference  {
 	enum PLACEMENT {A_ONLY, B_ONLY, BOTH};
 	PLACEMENT m_location; // This determines the placement of this segment.
 	List<?> m_segment;    // This is a list of the segment for this classes dataType 
-
+	
 	Difference(PLACEMENT location, List<Object> segment){
 		m_segment = segment;
 		m_location = location;
