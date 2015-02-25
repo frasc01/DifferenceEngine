@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import org.apache.commons.lang3.*;
 
 public class DifferenceEngine {
 	private List<?> m_obj1;
@@ -18,11 +19,9 @@ public class DifferenceEngine {
 	private boolean m_sortFirst=false;
 	private String m_delimiter="\n";
 
-	List<Difference> diffList;
-	
 	DifferenceEngine() {
 	}
-
+		
 	DifferenceEngine(List<?> obj1List, List<?> obj2List) {
 		m_obj1 = (List<?>)obj1List;
 		m_obj2 = (List<?>)obj2List;
@@ -51,32 +50,43 @@ public class DifferenceEngine {
 			Arrays.sort(a_obj1);
 			String[] a_obj2=obj2.split(m_delimiter);
 			Arrays.sort(a_obj2);
-			m_obj1 = (List<?>)Arrays.asList(a_obj1);
-			m_obj2 = (List<?>)Arrays.asList(a_obj2);
-		} else {
-			m_obj1 = (List<?>)Arrays.asList(obj1.split(m_delimiter));
-			m_obj2 = (List<?>)Arrays.asList(obj2.split(m_delimiter));
-		}
+		} 
+		m_obj1 = (List<?>)Arrays.asList(obj1.split(m_delimiter));
+		m_obj2 = (List<?>)Arrays.asList(obj2.split(m_delimiter));
 	}
 	
-	DifferenceEngine(Array obj1, Array obj2) {
-		this(obj1, obj2, false);
+
+	public DifferenceEngine(Object[] a1, Object[] a2) {
+		this(a1,a2,false);
 	}
 	
-	DifferenceEngine(Array obj1, Array obj2, boolean sortFirst) {
+
+	public DifferenceEngine(Object[] a1, Object[] a2, boolean sortFirst) {
 		m_sortFirst = sortFirst;	
 
 		if (isSortFirst()) {
-//			Arrays.sort(obj1);
-//			Arrays.sort(obj2);
-			m_obj1 = (List<?>)Arrays.asList(obj1);
-			m_obj2 = (List<?>)Arrays.asList(obj2);
-		} else {
-			m_obj1 = (List<?>)Arrays.asList(obj1);
-			m_obj2 = (List<?>)Arrays.asList(obj2);
+			Arrays.sort(a1);
+			Arrays.sort(a2);
 		}
+		m_obj1 = (List<?>)Arrays.asList(a1);
+		m_obj2 = (List<?>)Arrays.asList(a2);
+	}
+
+	public DifferenceEngine(int[] a1, int[] a2) {
+		this(a1, a2, false);
 	}
 	
+	public DifferenceEngine(int[] a1, int[] a2, boolean sortFirst) {
+		this(ArrayUtils.toObject(a1),ArrayUtils.toObject(a2), sortFirst);
+	}
+
+	public DifferenceEngine(double[] a1, double[] a2) {
+		this(a1,a2,false);
+	}
+
+	public DifferenceEngine(double[] a1, double[] a2, boolean sortFirst) {
+		this(ArrayUtils.toObject(a1),ArrayUtils.toObject(a2), sortFirst);
+	}
 
 	
 	public String ignoreWhiteSpace(String inputString) {
@@ -107,12 +117,16 @@ public class DifferenceEngine {
 		m_ignoreCase = ignoreCase;
 	}
 	
-	public void setDelimiter(String delimiter) {
-		m_delimiter = delimiter;
-	}
-	
 	public String getDelimiter() {
 		return m_delimiter;
+	}
+	
+	public List<?> getList1() {
+		return m_obj1;
+	}
+	
+	public List<?> getList2() {
+		return m_obj2;
 	}
 	
 	public void setSortFirst(boolean sortFirst) {
