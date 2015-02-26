@@ -10,7 +10,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
 import org.apache.commons.lang3.*;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 public class DifferenceEngine {
 	private List<?> m_obj1;
@@ -21,8 +25,6 @@ public class DifferenceEngine {
 	private boolean m_sortFirst=false;
 	private String m_delimiter="\n";
 
-	DifferenceEngine() {
-	}
 		
 	DifferenceEngine(List<?> obj1List, List<?> obj2List) {
 		m_obj1 = (List<?>)obj1List;
@@ -52,9 +54,12 @@ public class DifferenceEngine {
 			Arrays.sort(a_obj1);
 			String[] a_obj2=obj2.split(m_delimiter);
 			Arrays.sort(a_obj2);
-		} 
-		m_obj1 = (List<?>)Arrays.asList(obj1.split(m_delimiter));
-		m_obj2 = (List<?>)Arrays.asList(obj2.split(m_delimiter));
+			m_obj1 = (List<?>)Arrays.asList(a_obj1);
+			m_obj2 = (List<?>)Arrays.asList(a_obj2);
+		} else {
+			m_obj1 = (List<?>)Arrays.asList(obj1.split(m_delimiter));
+			m_obj2 = (List<?>)Arrays.asList(obj2.split(m_delimiter));
+		}
 	}
 	
 
@@ -129,10 +134,6 @@ public class DifferenceEngine {
 	
 	public List<?> getList2() {
 		return m_obj2;
-	}
-	
-	public void setSortFirst(boolean sortFirst) {
-		m_sortFirst = sortFirst;
 	}
 	
 	public boolean isSortFirst() {
@@ -268,6 +269,18 @@ public class DifferenceEngine {
 		 */
 		return allDiffs;
 	}
+	
+	/**
+	 * Converts the List Difference output into json format
+	 * @param jsonElement 
+	 * @return String
+	 */
+	public String toJson(JsonElement jsonElement) {
+		Gson gson = new Gson();
+		gson.toJson(jsonElement);
+		String json="";
+		return json;
+	}
 
 	
 
@@ -296,12 +309,12 @@ public class DifferenceEngine {
 		else {
 //			String str1 = "xyzzy Hello xyzzy\nWorld Test \nWorld Test application.";
 //			String str2 = "This is a Hell of a Hello World application.\nWorld Test application.\nThis is a Hell of a Hello World application.\nThis String has 4 lines in it";
-			String str1 = "01\n02\n03\n04\n   05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20";
+//			String str1 = "01\n02\n03\n04\n   05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20";
 //			String str1 = "01\n02\n03\n04\n   05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n19\n20";
-			String str2 = "67\n99\n98\n03\n04\n 05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n97\n96\n95\n19\n20\n";
+//			String str2 = "67\n99\n98\n03\n04\n 05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n97\n96\n95\n19\n20\n";
 //			String str2 = "67\n99\n98\n03\n04\n 05\n06\n07\n08\n09\n10\n11\n12\n13\n14\n15\n16\n19\n20\n";
-//			String str1 = "01,02,03,04,   05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20";
-//			String str2 = "99,98,03,04, 05,06,07,08,09,10,11,12,13,14,15,16,97,96,95,19,20,";
+			String str1 = "01,02,03,04,   05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20";
+			String str2 = "99,98,03,04, 05,06,07,08,09,10,11,12,13,14,15,16,97,96,95,19,20,";
 
 			DifferenceEngine sde;
 			
@@ -317,8 +330,8 @@ public class DifferenceEngine {
 			
 //			sde = new DifferenceEngine(str1, str2, "\n", true, true);
 //			sde = new DifferenceEngine(str1, str2, ",", true, true);
-			sde = new DifferenceEngine(str1, str2);
-//			sde = new DifferenceEngine(f1Data, f2Data, "\n", true);
+//			sde = new DifferenceEngine(str1, str2, ",", true);
+			sde = new DifferenceEngine(f1Data, f2Data, "\n", true);
 			
 			// Loop through the differences and print them out
 			List<Difference> diffs = sde.differences();

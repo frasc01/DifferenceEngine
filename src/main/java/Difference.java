@@ -1,5 +1,7 @@
 package main.java;
 
+import com.google.gson.annotations.*;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,7 @@ import java.util.List;
  *  If you use a base class object, they will be converted to the Java wrapper class by the difference engine.
  *
  */
+
 public class Difference  {
 	enum PLACEMENT {A_ONLY, B_ONLY, BOTH};
 	PLACEMENT m_location; // This determines the placement of this segment.
