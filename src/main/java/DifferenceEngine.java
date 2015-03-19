@@ -49,16 +49,28 @@ public class DifferenceEngine {
 		m_ignoreWhiteSpace = ignoreWhiteSpace;
 		m_sortFirst = sortFirst;
 		
-		if (isSortFirst()) {
-			String[] a_obj1=obj1.split(m_delimiter);
-			Arrays.sort(a_obj1);
-			String[] a_obj2=obj2.split(m_delimiter);
-			Arrays.sort(a_obj2);
-			m_obj1 = (List<?>)Arrays.asList(a_obj1);
-			m_obj2 = (List<?>)Arrays.asList(a_obj2);
+		if (obj1.length()==0) {
+			m_obj1=new ArrayList<String>();
 		} else {
-			m_obj1 = (List<?>)Arrays.asList(obj1.split(m_delimiter));
-			m_obj2 = (List<?>)Arrays.asList(obj2.split(m_delimiter));
+			if (isSortFirst()) {
+				String[] a_obj1=obj1.split(m_delimiter);
+				Arrays.sort(a_obj1);
+				m_obj1 = (List<?>)Arrays.asList(a_obj1);
+			} else {
+				m_obj1 = (List<?>)Arrays.asList(obj1.split(m_delimiter));
+			}
+		}
+		
+		if (obj2.length()==0) {
+			m_obj2=new ArrayList<String>();
+		} else {
+			if (isSortFirst()) {
+				String[] a_obj2=obj2.split(m_delimiter);
+				Arrays.sort(a_obj2);
+				m_obj2 = (List<?>)Arrays.asList(a_obj2);
+			} else {
+				m_obj2 = (List<?>)Arrays.asList(obj2.split(m_delimiter));
+			}		
 		}
 	}
 	
